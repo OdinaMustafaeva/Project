@@ -1,0 +1,13 @@
+pip==23.0.1
+setuptools==67.6.1
+django==4.2.1
+django-environ==0.10.0
+djangorestframework==3.14.0
+django-filter==23.2
+psycopg2==2.9.6
+Pillow==9.5.0
+dj-rest-auth==4.0.0
+drf_yasg==1.21.5
+factory-boy==3.2.1
+Faker==18.7.0
+
