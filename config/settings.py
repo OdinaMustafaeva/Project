@@ -70,8 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
@@ -125,11 +124,7 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 STATIC_URL = 'static/'
-# AUTHENTICATION_BACKENDS = [
-#     'social_core.backends.google.GoogleAuth2'
-# ]
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '164913220557-sut1aojt9ejm5c2vc857rdd0q4vkvocm.apps.googleusercontent.com'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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''
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
