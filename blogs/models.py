@@ -35,24 +35,37 @@ class Blog(TimestampModel):
         self.slug = slug
         return super().save(*args, **kwargs)
 
+    @property
+    def likes(self):
+        return self.like_dislikes.filter(type=LikeDislike.LikeType.LIKE).count()
+
+    @property
+    def dislikes(self):
+        return self.like_dislikes.filter(type=LikeDislike.LikeType.DISLIKE).count()
+
+    @property
+    def comment(self):
+        return self.comments.count()
+
 
 class LikeDislike(TimestampModel):
-    class LikeType(models.TextChoices):
-        dislike = "-"
-        like = "+"
+    class LikeType(models.IntegerChoices):
+        DISLIKE = -1
+        LIKE = 1
 
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="LikeDislikeBlog")
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="LikeDislikeUser")
-    type = models.CharField(max_length=20, choices=LikeType.choices)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="like_dislikes")
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="like_dislikes")
+    type = models.SmallIntegerField(choices=LikeType.choices)
+
+    class Meta:
+        unique_together = ["blog", "user"]
 
     def __str__(self):
         return f"{self.user}"
 
 
-class Comments(TimestampModel):
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="CommentsBlog")
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="CommentsUser")
+class Comment(TimestampModel):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="comments")
     body = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.body[0:50]
+    parent = models.ForeignKey("self", models.CASCADE, related_name="replies", null=True, blank=True)

@@ -12,12 +12,16 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from users.models import User, VerificationCode
 
-from users.serializers import RegisterSerializer, LoginSerializer, CustomTokenObtainPairSerializer, UserSerializer, \
-    UserDetailSerializer, SendEmailVerificationCodeSerializer, CheckEmailVerificationCodeSerializer
+from users.models import VerificationCode
+from users.serializers import RegisterSerializer, CustomTokenObtainPairSerializer, UserSerializer, UserDetailSerializer, \
+    LoginSerializer, SendEmailVerificationCodeSerializer, CheckEmailVerificationCodeSerializer
 
 
 # Create your views here.
@@ -117,3 +121,11 @@ class CheckEmailVerificationCodeWithParams(APIView):
         verification_code.is_verified = True
         verification_code.save(update_fields=["is_verified"])
         return Response({"detail": "Verification code is verified."})
+
+
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
+
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter

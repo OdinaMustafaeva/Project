@@ -9,5 +9,6 @@ Pillow==9.5.0
 dj-rest-auth==4.0.0
 drf_yasg==1.21.5
 factory-boy==3.2.1
+django-allauth==0.54.0
 Faker==18.7.0
 
