@@ -1,4 +1,4 @@
 # Project
 API PROJECT
 
-https://odinamusta.pythonanywhere.com
+https://odinamusta.pythonanywhere.com/swagger
